@@ -4,7 +4,7 @@ require("dotenv").config();
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const key = require('./key');
-let numAvailableProducts;
+let availableProductIDs = [];
 
 
 
@@ -34,15 +34,15 @@ function startShopping () {
 
 function listProducts(dbProductArray) {
     console.log("\nAll available products:\n")
-    numAvailableProducts = 0;
+    availableProductIDs = [];
     dbProductArray.map(elem => {
         if (elem.stock_quantity > 0) {
-          numAvailableProducts++;  
+          availableProductIDs.push(elem.item_id);  
           console.log(`Product: ${elem.product_name}`);
           console.log(`Price: $${elem.price}`);
           console.log(`ID: ${elem.item_id}\n`);
         }
-    })
+    });
 }
 
 function purchaseQuery(dbProductArray) {
@@ -53,7 +53,7 @@ function purchaseQuery(dbProductArray) {
             name: "productID"
         }
     ).then(results => {
-        if (!isNaN(results.productID) && results.productID > 0 && results.productID <= numAvailableProducts) {
+        if (!isNaN(results.productID) && results.productID > 0 && availableProductIDs.includes(parseInt(results.productID))) {
             purchaseQuantityQuery(dbProductArray[results.productID-1]);
         } else {
             console.log("Please try again with a viable ID number.");
@@ -123,7 +123,7 @@ function continueShoppingQuery() {
 
 function updateStockQuantity(purchasedProduct, purchaseQuantity) {
     connection.query(
-        `UPDATE products SET stock_quantity = stock_quantity - ${purchaseQuantity} WHERE item_id = ${purchasedProduct.item_id} and stock_quantity > 0`,
+        `UPDATE products SET stock_quantity = stock_quantity - ${purchaseQuantity} WHERE item_id = ${purchasedProduct.item_id} and stock_quantity >= 0`,
         function(err, res) {
             if (err) throw err;
             console.log(res.affectedRows + " got updated!");
