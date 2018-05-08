@@ -23,7 +23,7 @@ The app is run by passing 1 of 2 different commands in the terminal, one for a c
         4. Add a new item to the database by walking through a series of product information prompts
     * The manager will return to the main menu after each action and can either continue with another action or exit the program.
 
-### App Demo
+### App Demo Video
 
 [![Bamazon Node Application Walkthrough](http://img.youtube.com/vi/pZxJcj1ylNc/0.jpg)](http://www.youtube.com/watch?v=pZxJcj1ylNc)
 
