@@ -161,7 +161,7 @@ function addNewProduct(dbProductArray) {
                 },
                 function(err, res) {
                     if (err) throw err;
-                    console.log(res.affectedRows + " got updated!");
+                    console.log(`${results.productName} inventory was updated.`);
                 }
             )
             mainMenu();

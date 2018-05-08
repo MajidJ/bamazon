@@ -126,7 +126,7 @@ function updateStockQuantity(purchasedProduct, purchaseQuantity) {
         `UPDATE products SET stock_quantity = stock_quantity - ${purchaseQuantity} WHERE item_id = ${purchasedProduct.item_id} and stock_quantity >= 0`,
         function(err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + " got updated!");
+            // console.log(res.affectedRows + " got updated!");
         }
 
     )
